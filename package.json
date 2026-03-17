@@ -1,0 +1,22 @@
+{
+  "name": "javascript_packages",
+  "version": "1.0.0",
+  "description": "",
+  "main": "uuid.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "chai": "^6.2.2",
+    "uuid": "^13.0.0"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^10.3.0",
+    "jest": "^30.3.0",
+    "mocha": "^11.7.5"
+  }
+}
