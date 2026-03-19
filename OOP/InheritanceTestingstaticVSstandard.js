@@ -20,8 +20,9 @@ class Evergreen extends Tree {
         this.name = name
     }
     definition() {
-        // console.log(this)////////
-        return `${super.definition()} Evergreens keep their leaves all year round.`
+        return `${super.definition()} Evergreens keep their leaves all year round.` 
+        // return `${Tree.definition()} Evergreens keep their leaves all year round.`  //This is how the function will  work if I decide to set it as standard.
+
     }
     log () {
         console.log(this)
@@ -42,6 +43,6 @@ class Child extends Evergreen {
 const tree = new Tree("Plantae")
 const evergreen = new Evergreen("Plantae", "Biggy Treegy")
 console.log(Evergreen.definition()) //definition is static, meaning it cannot be called on an instance but the class itself
-console.log(evergreen.definition())
+// console.log(evergreen.definition())
 const child = new Child("Just Child", "PlantPy", true)
 console.log(child.intro())
