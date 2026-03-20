@@ -43,3 +43,11 @@ console.log(typeof Ceo.prototype)
 console.log(elon.command === collo.command)
 
 
+
+
+
+
+
+//You've now learned about the Prototypal model of Object-Orientation used by JavaScript, natively.
+//While the syntax changes, Object-Orientation does not. 
+//The only difference is how you write the class and how you instantiate the instance.
