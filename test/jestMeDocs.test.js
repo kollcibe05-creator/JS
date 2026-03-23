@@ -118,6 +118,51 @@ expect(() => compileAndroidCode()).toThrow(Error)
 expect(() => compileAndroidCode()).toThrow(/Err/)
 expect(() => compileAndroidCode()).toThrow(/^you are wrong!$/)
 
+//And there are still more to explore,,,,,
+.toHaveBeenCalled()
+.toHaveBeenCalledTimes(number)
+.toHaveBeenCalledWith(arg1, arg2, ...)
+.toHaveBeenLastCalledWith(arg1, arg2, ...)
+.toHaveBeenNthCalledWith(nthCall, arg1, arg2, ....)
+.toHaveReturned()
+.toHaveReturnedTimes(number)
+.toHaveReturnedWith(value)
+.toHaveLastReturnedWith(value)
+.toHaveNthReturnedWith(nthCall, value)
+.toHaveLength(number)
+.toHaveProperty(keyPath, value?)
+.toBeCloseTo(number, numDigits?)
+.toBeDefined()
+.toBeFalsy()
+.toBeGreaterThan(number | bigint)
+.toBeGreaterThanOrEqual(number | bigint)
+.toBeLessThan(number | bigint)
+.toBeLessThanOrEqual(number | bigint)
+.toBeInstanceOf(Class)
+.toBeNull()
+.toBeTruthy()
+.toBeUndefined()
+.toBeNaN()
+.toContain(item)
+.toContainEqual(item)
+.toEqual(value)
+.toMatch(regexp | string)
+.toMatchObject(object)
+.toMatchSnapshot(propertyMatchers?, hint?)
+.toMatchInlineSnapshot(propertyMatchers?, inlineSnapshot)
+.toStrictEqual(value)
+.toThrow(error?)
+.toThrowErrorMatchingSnapshot(hint?)
+.toThrowErrorMatchingInlineSnapshot(inlineSnapshot)
+
+// Assertion Count
+expect.assertions(number)
+expect.hasAssertions()
+// Extend Utilities
+expect.addEqualityTesters(testers)
+expect.addSnapshotSerializer(serializer)
+expect.extend(matchers)
+
 
 //Jest allows Mocha terms to set up tests, for instance *describe()* and *it()*
 //toEqual ignores object keys with undefined props, sparseness or object type mismatch.To take them into account use toStrictEqual instead
@@ -133,13 +178,13 @@ test('the return value is pokemon API', async () => {
 })
 
 //Async/await
-// test("the return value are bots", () => {
-//     await expect(fetchData()).resolves.toBe("pokemon API")
+test("the return value are bots", async() => {
+    await expect(fetchData()).resolves.toBe("pokemon API")
 
-// })
-// test("The fetch fails with an error", async () => {
-//     await expect(fetchData()).rejects.toMatch("error")
-// })
+})
+test("The fetch fails with an error", async () => {
+    await expect(fetchData()).rejects.toMatch("error")
+})
 
 //Be sure to return (or await) the promise - if you omit the return/await statement, your test will complete before the promise returned from fetchData resolves or rejects.
 
@@ -156,38 +201,38 @@ test("fetch with catch", () => {
 
 //WRONG
 // Don't do this!
-// test('the data is peanut butter', () => {
-//   function callback(error, data) {
-//     if (error) {
-//       throw error;
-//     }
-//     expect(data).toBe('peanut butter');
-//   }
+test('the data is peanut butter', () => {
+  function callback(error, data) {
+    if (error) {
+      throw error;
+    }
+    expect(data).toBe('peanut butter');
+  }
 
-//   fetchData(callback);
-// });
+  fetchData(callback);
+});
 // The problem is that the test will complete as soon as fetchData completes, before ever calling the callback.
 
 
 // There is an alternate form of test that fixes this. Instead of putting the test in a function with an empty argument, use a single argument called done
 //  Jest will wait until the done callback is called before finishing the test.
 
-// test('the data is peanut butter', done => {
-//   function callback(error, data) {
-//     if (error) {
-//       done(error);
-//       return;
-//     }
-//     try {
-//       expect(data).toBe('peanut butter');
-//       done();
-//     } catch (error) {
-//       done(error);
-//     }
-//   }
+test('the data is peanut butter', done => {
+  function callback(error, data) {
+    if (error) {
+      done(error);
+      return;
+    }
+    try {
+      expect(data).toBe('peanut butter');
+      done();
+    } catch (error) {
+      done(error);
+    }
+  }
 
-//   fetchData(callback);
-// });
+  fetchData(callback);
+});
 // If done() is never called, the test will fail (with timeout error), which is what you want to happen.
 
 
