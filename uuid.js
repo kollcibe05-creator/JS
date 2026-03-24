@@ -1,6 +1,7 @@
 // crypto, available from v14.17.0+ is the new standard for generating a UUID
 //it requires no installation in our case.
 //generates cryptographically strong version  4 UUIDs without external dependencies.
+
 // const crypto = require("crypto") //if you want to;
 
 const myUUID = crypto.randomUUID()
@@ -14,9 +15,10 @@ console.log(uuid)
 
 // FOR ECMASCRIPT6
 // import { v4 as uuidv4 } from 'uuid';
-// const myuuid = uuidv4();
-// console.log(`Your UUID is: ${myuuid}`);
-// // console.log(Math.random()*100)
+
+const mYuuid = uuidv4();
+console.log(`Your UUID is: ${myuuid}`);
+
 
 const {v4: uuidv4, NIL} = require("uuid");
 const myuuid = uuidv4();
@@ -32,7 +34,7 @@ console.log(timestampUUID)
 
 // other versions (v3, v5) v3 ~ name-based , MD5 : v5 ~ name-based, SHA-1
 
-//PRACTICE ALL THE WAY
+        //```````````````PRACTICE ALL THE WAY``````````````````````````//
 
 //NIL ~ zeros
 const {NIL: NIL_UUID} = require("uuid");
