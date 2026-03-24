@@ -1,4 +1,7 @@
-        // Asynchronous Testing: Promises & APIs
+                                         
+                                         //*******************************MODERN VS OLD SYNTAX***************************//
+
+        //********************Asynchronous Testing: Promises & APIs*****************//
 // Classic: Used a done() callback which was prone to "hanging" if you forgot to call it.
 // Modern: Uses async/await. Mocha automatically handles the promise.
 
@@ -14,7 +17,7 @@ describe('Async API', () => {
   });
 });
 
-        // DOM Testing: UI & Elements
+      //***************************DOM Testing: UI & Elements************************************//
 //Tests how your code interacts with HTML.
 // Since Node.js doesn't have a screen, we use JSDOM to create a "fake" browser in memory.
 // Classic: Manually reading .html files and using global.document = ....
@@ -50,7 +53,7 @@ describe('DOM Interaction', () => {
   });
 });
 
-        // Integration Testing: Mocking the Server
+            //******************************Integration Testing: Mocking the Server******************************//
 // This tests how your app handles server responses without actually hitting a real server (which keeps tests fast and private).        
 
 // Classic: Used nock, which intercepted Node's internal http module.
