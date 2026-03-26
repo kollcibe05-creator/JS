@@ -29,3 +29,5 @@ function doubleExclusion (min, max) {
 function withMinExcluded(min, max) {
     return (1.0 - Math.random()) * (max - min) + min
 }
+//A rough example of 0 (included) to max(excluded)
+Math.floor(Math.random() * max) //To include max, add + 1
