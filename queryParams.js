@@ -1,3 +1,17 @@
+// fetch('http://localhost:3001/sushis?limit=4&offest=4')  OR
+// fetch('http://localhost:3001/sushis?_limit=4&_offest=4') //using _ is common for JSON servers
+
+// OFFSET - indicates the number of items to skip before returning the given limit of values
+        //In our case it will start at 4 then 4 + 4 = 8  then 8 + 4 = 12.....
+
+// http://localhost:3001/sushis?limit=4&start=0      OR    
+// http://localhost:3001/sushis?_limit=4&_start=0         
+
+// START - almost similar to Offset only that it does not repeat.
+
+
+
+
 // Filtering
 
 // GET /tickets?state=open
@@ -28,3 +42,4 @@
 // 429 - Too many Requests
 // 304 Not Modified
 // 405 - Method Not Allowed
+
