@@ -7,9 +7,10 @@
 // http://localhost:3001/sushis?limit=4&start=0      OR    
 // http://localhost:3001/sushis?_limit=4&_start=0         
 
-// START - almost similar to Offset only that it does not repeat.
+// START - almost similar to Offset, only that it does not repeat.
 
-
+//For Rate-limited APIs, you may have a query Param like: 
+// https://api.giphy.com/v1/gifs/search?q=dolphin&api_key=YOUR API KEY&rating=g
 
 
 // Filtering
