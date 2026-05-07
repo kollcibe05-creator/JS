@@ -22,7 +22,8 @@ The amount of columns is dependent of how many templates you decide to generate:
 #container-div{
     border: 0.1rem solid red;
     display: grid;
-    grid-template-columns: auto auto auto auto;
+    grid-template-columns: auto auto auto;
+    row-gap: 5px;
 }
 ```
 For our case, we will have 4 columns  
