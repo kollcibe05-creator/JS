@@ -26,4 +26,4 @@ The amount of columns is dependent of how many templates you decide to generate:
     row-gap: 5px;
 }
 ```
-For our case, we will have 4 columns  
+For our case, we will have 3 columns  
