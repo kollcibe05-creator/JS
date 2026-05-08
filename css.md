@@ -57,4 +57,18 @@ For our case, we will have 3 columns
 #### fr
 Stands for "fraction".  
 1 fr takes a fraction of the available space, 2 fr two all depending on the amount of columns you have and the fr allocations.  
-
+#### grid-areas & grid-template-areas
+For them to work, the element must take up a `grid-area` name which will be used to specify the layout of the grid using the `grid-template-area` while the `unnamed` elements wil be referenced with a `.`  
+```css
+span{
+    cursor: e-resize;
+    grid-area: myArea;
+}
+#container-div{
+    border: 0.1rem solid red;
+    display: grid;
+    grid-template-areas: 
+    "myArea myArea . . .";
+    row-gap: 5px;
+}
+```
