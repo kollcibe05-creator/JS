@@ -54,3 +54,7 @@ For our case, we will have 3 columns
 - `place-self` A shorthand property for the **align-self** and the **justify-self** properties.  
 - `place-content` A shorthand property for the **align-content** and the **justify-content** properties.  
 - `row-gap` Specifies the gap between the grid rows.  
+#### fr
+Stands for "fraction".  
+1 fr takes a fraction of the available space, 2 fr two all depending on the amount of columns you have and the fr allocations.  
+
