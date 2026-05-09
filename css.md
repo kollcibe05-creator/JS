@@ -72,3 +72,14 @@ span{
     row-gap: 5px;
 }
 ```
+### All CSS Item Properties.  
+- `align-self` Aligns the content for a specific grid item along the column axis
+- `grid-area` A shorthand property for the grid-row-start, grid-column-start, grid-row-end and the grid-column-end properties
+- `grid-column` A shorthand property for the grid-column-start and the grid-column-end properties
+- `grid-column-end` Specifies where to end the grid item
+- `grid-column-start` Specifies where to start the grid item
+- `grid-row` A shorthand property for the grid-row-start and the grid-row-end properties
+- `grid-row-end` Specifies where to end the grid item
+- `grid-row-start` Specifies where to start the grid item
+- `justify-self` Aligns the content for a specific grid item along the row axis
+- `place-self` A shorthand property for the align-self and the justify-self properties
