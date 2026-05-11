@@ -84,7 +84,65 @@ span{
 - `justify-self` Aligns the content for a specific grid item along the row axis
 - `place-self` A shorthand property for the align-self and the justify-self properties
 
+# All CSS Flex Container Properties
+- `display` - Must be set to `flex` or `inline-flex`
+- `flex-direction` - Sets the display-direction of flex items : `row(default) | column | row-reverse | column-reverse`
+- `flex-wrap` - Specifies whether the flex items should wrap or not: `nowrap(default) | wrap | wrap-reverse`
+- `flex-flow` - Shorthand property for `flex-direction` and `flex-wrap`.
+- `justify-content` - Aligns the flex items when they do not use all available space on the main-axis (horizontally): `center | flex-start(default) | flex-end | space-around | space-between | space-evenly`
+- `align-items` - Aligns the flex items when they do not use all available space on the cross-axis (vertically): `normal | stretch | center | flex-start | flex-end | baseline`
+- `align-content` - Aligns the flex lines when there is extra space in the cross axis and flex items wrap: `stretch(default) | center | flex-start | flex-end | space-between | space-around | space-evenly`
+## All CSS Flex Item Properties
+- `order` - Specifies the display order of the flex items inside the flex container: `number`
+- `flex-grow` - Specifies how much a flex item will grow relative to the rest of the flex items: `number(default - 0)`
+- `flex-shrink` - Specifies how much a flex item will shrink relative to the rest of the flex items: `number(default: 1)`
+- `flex-basis` - Specifies the initial length of a flex item: `(length measurements)`
+- `flex` - Shorthand property for **flex-grow**, **flex-shrink**, and **flex-basis**.
+- `align-self` - Specifies the alignment for the flex item inside the flex container. `overrides align-items(thus similar values).`
 
 
 
 # @supports 
+The `@supports` rule lets one check if the browser supports a specific css property or value, and to define fallback styles if the feature is not supported.  
+Basic syntax: 
+```css
+@supports (property: value) {
+    /*CSS rules to apply*/
+}
+```
+If it supports, the CSS styling provided inside the @supports rule will apply, if not the styling rule outside it will be applied.  
+```css
+/* use this CSS if the browser does not support display: flex */
+.container {
+  float: left;
+  width: 100%;
+}
+
+/* use this CSS if the browser supports display: flex */
+@supports (display: flex) {
+  .container {
+    display: flex;
+  }
+}
+```
+## Negating with not
+Apply the style if the browser does not support the featre.   
+```css
+@supports not (display: grid) {
+    .warning: {
+        background-color: pink;
+        padding: 10px;
+        border: 1px solid red;
+    }
+}
+```
+## Combining Conditions
+You can use **and**, **or** and **not** for multiple conditions simultaneously.  
+```css
+@supports (display: grid) and  (not gap: 10px) {
+    .container {
+    display: grid;
+    gap: 10px;
+  }
+}
+```
