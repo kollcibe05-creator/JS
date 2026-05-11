@@ -136,7 +136,43 @@ To create an oval shape(for a rectangle element) or to create a circular element
   height: 200px;
 } 
 ```
-
+# Background property
+- `background`	A shorthand property for setting all the background properties in one declaration
+- `background-clip`	Specifies the painting area of the background: `border-box(default - the background extends behind the border) | padding-box(background extends to the inside of the edge of the border) | content-box(background extends to the edge of the content box)`
+- `background-image`	Specifies one or more background images for an element
+- `background-origin`	Specifies where the background image(s) is/are positioned: `padding-box(default - starts from the top left corner of the padding edge) | border-box(from the top left corner of border edge) | content-box(from the top left corner of the content edge)`(Has no impact if `background attachment` is set to *fixed*).
+- `background-size`	Specifies the size of the background image(s): `auto(default - original size) | contain(scales the image up and down to fit inside the content area) | cover | units`
+- `background-attachment` Specifies whether a background image scrolls with the rest of the page, or is fixed. `scroll(default) | fixed | local(scrolls with the element's contents) | initial | inherit(from parent)`
+- `background-position` Sets the starting position of a background image: `x% y%(default 0% 0%) | left top | left-center | left bottom | right top | center top | center center | center | bottom | right center | initial | inherit` (if one is specified the other will be center)
+- `background-repeat` : `repeat(default -the last can be clipped if not enough) | repeat-x | repeat-y | no-repeat | initial | inherit | space(The background-image is repeated as much as possible without clipping. The first and last image is pinned to either side of the element, and whitespace is distributed evenly between the images) | round(The background-image is repeated and squished or stretched to fill the space (no gaps)) | initial | inherit`
+```css
+#example1 {
+  background-image: url(img_flwr.gif), url(paper.gif);
+  background-position: right bottom, left top;
+  background-repeat: no-repeat, repeat;
+}
+```
+Using the shorthand property of `background`, you can achieve the same as: 
+```css
+#example1 {
+  background: url(img_flwr.gif) right bottom no-repeat, url(paper.gif) left top repeat;
+}
+```
+`backgound` is a shorthand for:
+- background-color
+- background-image
+- background-position
+- background-size
+- background-repeat
+- background-origin
+- background-clip
+- background-attachment
+```css
+body {
+  background: lightblue url("img_tree.gif") no-repeat fixed center;
+}
+```
+It does not matter if any of the values are missing.  
 # @supports 
 The `@supports` rule lets one check if the browser supports a specific css property or value, and to define fallback styles if the feature is not supported.  
 Basic syntax: 
