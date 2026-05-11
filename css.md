@@ -99,8 +99,43 @@ span{
 - `flex-basis` - Specifies the initial length of a flex item: `(length measurements)`
 - `flex` - Shorthand property for **flex-grow**, **flex-shrink**, and **flex-basis**.
 - `align-self` - Specifies the alignment for the flex item inside the flex container. `overrides align-items(thus similar values).`
+# Border-radius
+`border-radius` is actually a shorthand for `border-top-left-radius`, `border-top-right-radius`, `border-bottom-right-radius` and `border-bottom-left-radius`.   
+To form an elliptical shape, you must specify two values for each radius, separated by a slash.  
+The first value defines the horizontal radius and the second value vertical radius.  
+To create an oval shape(for a rectangle element) or to create a circular element(for a square element) set the `border-radius to 50%`.
+```css
+/*Elliptical*/
+#div1 {
+  border-radius: 70px / 30px;
+  background: #04AA6D;
+  width: 200px;
+  height: 150px; 
+}
+/*Elliptical*/
 
+#div2 {
+    border-radius: 15px / 50px;
+  background: #04AA6D;
+  width: 200px;
+  height: 150px; 
+}
+/*Oval*/
+#div3 {
+  border-radius: 50%;
+  background: #04AA6D;
+  width: 200px;
+  height: 150px;
+} 
 
+/*Circular*/
+#div4 {
+  border-radius: 50%;
+  background: #04AA6D;
+  width: 200px;
+  height: 200px;
+} 
+```
 
 # @supports 
 The `@supports` rule lets one check if the browser supports a specific css property or value, and to define fallback styles if the feature is not supported.  
