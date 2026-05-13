@@ -558,4 +558,874 @@ p.test2 {
 `text-justify: auto(browser determines the justification algorithm.) | inter-word(increases/decreases the space btwn words) | inter-character(increases/decreases space between characters) | none | initial | inherit`  
 # CSS Tooltip
 Used to specify extra information about something when the user moves the mouse pointer over an element.  
+```css
+<style>
+/* Tooltip container */
+.container {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black; /* Add dots under the hoverable text */
+  cursor: pointer;
+}
+
+/* Tooltip text */
+.tooltip {
+  visibility: hidden; /* Hidden by default */
+  width: 130px;
+  background-color: black;
+  color: #ffffff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1; /* Ensure tooltip is displayed above content */
+}
+
+/* Show the tooltip text on hover */
+.container:hover .tooltiptext {
+  visibility: visible;
+}
+</style>
+
+<div class="container">Hover over me
+  <span class="tooltip">Some tooltip text</span>
+</div>
+```
+#### HTML 
+Uses a container element like `<div>`.  
+The tooltip text is placed inside an inline element (like `<span>`).  
+#### CSS
+The container element class uses `position: relative`, which is needed to position the tooltip text(`position: absolute`).  
+The `:hover` selector is used to show the tooltip text when the use moves the mouse over the `<div>`.  
+### Positioning the tooltip
+#### Right and Left aligned Tooltip 
+```css
+/*In this example, the tooltip is placed to the right (left:105%) of the "hoverable" text (<div>). Also note that top:-5px is used to place it in the middle of its container element. We use the number 5 because the tooltip text has a top and bottom padding of 5px. If you increase its padding, also increase the value of the top property to ensure that it stays in the middle (if this is something you want). The same applies if you want the tooltip placed to the left.*/
+.tooltiptext {
+  top: -5px;
+  left: 105%;
+}
+```
+Left-aligned tooltip;
+```css
+.tooltiptext {
+  top: -5px;
+  right: 105%;
+}
+```
+#### Top and Bottom-aligned Tooltip
+```css
+/* Note that we use the margin-left property with a value of minus 65 pixels. This is to center the tooltip above/below the hoverable text. It is set to the half of the tooltip's width (130/2 = 65).*/
+.tooltiptext {
+  width: 130px;
+  bottom: 100%;
+  left: 65%;
+  margin-left: -65px; /* Use half of the width (130/2 = 65), to center the tooltip */
+}
+```
+Bottom-aligned top;
+```css
+ .tooltiptext {
+  width: 130px;
+  top: 100%;
+  left: 50%;
+  margin-left: -65px; /* Use half of the width (130/2 = 65), to center the tooltip */
+}
+```
+### Fade-in tooltip 
+If you want to have a tooltip that fades in, use the CSS `transition` property and the `opacity` property to go from being completely invisibe to invisible 100% visible in a number of specified seconds.  
+```css
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+  cursor: pointer;  
+}
+
+.tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 2s;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+```
+## CSS Tooltip Arrows
+To create an arrow that should appear from a specific side of the tooltip, add "empty" content after the tooltip, with the pseuo-element class `::after` together with the `content` property. The arrow itself is created using borders. This will make the tooltip look like a speech bubble.   
+```css
+/*bottom arrow*/
+.tooltiptext::after {
+  content: " ";
+  position: absolute;
+  top: 100%; /* At the bottom of the tooltip */
+  left: 50%; /*centers the arrow*/
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+```
+**Note**: The `border-width` property specifies the size of the arrow. If you change this, also change the `margin-left` value to the same. This will keep the arrow centered.  
+The border-color is used to transform the content into an arrow. We set the top border to black, and the rest to transparent. If all sides were black, you would end up with a black square box.  
+```css
+/*Top Arrow*/
+.tooltiptext::after {
+  content: " ";
+  position: absolute;
+  bottom: 100%;  /* At the top of the tooltip */
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent black transparent;
+}
+```
+```css
+/*Left Arrow*/
+.tooltiptext::after {
+  content: " ";
+  position: absolute;
+  top: 50%;
+  right: 100%; /* To the left of the tooltip */
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent black transparent transparent;
+}
+```
+```css
+/*Right Arrow*/
+.tooltiptext::after {
+  content: " ";
+  position: absolute;
+  top: 50%;
+  left: 100%; /* To the right of the tooltip */
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent transparent black;
+}
+```
+# Responsive Images
+If you want an image to scale down if it has to, but never scale up to be larger than its original size, add the following:  
+```css
+img{
+  max-width: 100%;
+  height: auto
+}
+```
+Contrived example: 
+```css
+@media only screen and (max-width: 768px) {
+  div.gallery-item {
+    width: calc(50% - 20px);
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  div.gallery-item {
+    width: calc(100% - 20px);
+  }
+}
+```
+#### Responsive Gallery Example
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+* {
+  box-sizing: border-box;
+}
+
+div.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+div.gallery-item {
+  margin: 5px;
+  border: 1px solid #ccc;
+  width: calc(25% - 20px);
+}
+
+div.gallery-item:hover {
+  border: 1px solid #777;
+}
+
+div.gallery-item img {
+  width: 100%;
+  height: auto;
+}
+
+div.gallery-item div.desc {
+  padding: 15px;
+  text-align: center;
+}
+
+@media only screen and (max-width: 768px) {
+  div.gallery-item {
+    width: calc(50% - 20px);
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  div.gallery-item {
+    width: calc(100% - 20px);
+  }
+}
+</style>
+</head>
+<body>
+
+<h2>Responsive Image Gallery</h2>
+
+<h4>Resize the browser window to see the effect!</h4>
+
+<div class="gallery">
+
+<div class="gallery-item">
+  <a target="_blank" href="img_5terre.jpg">
+    <img src="img_5terre.jpg" alt="Cinque Terre" width="600" height="400">
+  </a>
+  <div class="desc">Cinque Terre</div>
+</div>
+
+<div class="gallery-item">
+  <a target="_blank" href="img_forest.jpg">
+    <img src="img_forest.jpg" alt="Forest" width="600" height="400">
+  </a>
+  <div class="desc">Green Forest</div>
+</div>
+
+<div class="gallery-item">
+  <a target="_blank" href="img_lights.jpg">
+    <img src="img_lights.jpg" alt="Northern Lights" width="600" height="400">
+  </a>
+  <div class="desc">Northern Lights</div>
+</div>
+
+<div class="gallery-item">
+  <a target="_blank" href="img_mountains.jpg">
+    <img src="img_mountains.jpg" alt="Mountains" width="600" height="400">
+  </a>
+  <div class="desc">Mountains</div>
+</div>
+
+</div>
+
+<p>Here we use media queries to re-arrange the images on different screen sizes:</p>
+<ul>
+  <li>If screen is larger than 768px wide - show four images side by side</li>
+  <li>If screen is smaller than 768px - show two images side by side</li>
+  <li>If screens is smaller than 480px - stack the images vertically (100%)</li>
+</ul>
+</body>
+</html>
+```
+# CSS Responsive Modal Images
+A modal image gives a user ability to display a larger version of an image without navigating away from the current page.  
+When a user clicks a modal image, it shows a popup window that appears at the top of the main content of the webpage, often with a semi-transparent background.  
+This modal must be closed by the user, typically with a "close" button or an 'X' sign in top-right corner.    
+We use CSS to create a modal window(dialog box), and hide it by default.  
+```html
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+h1 {
+  text-align: center;
+  padding: 20px;
+}
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  padding: 0 15px;
+}
+
+.gallery-item {
+  position: relative;
+  width: calc(25% - 20px);
+  height: auto;
+  margin: 10px;
+  cursor: pointer;
+  transition: transform 0.5s ease;
+}
+
+.gallery-item:hover {
+  transform: scale(1.1);
+}
+
+/* The Modal (background) */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.5s ease;
+}
+
+/* Modal content (image) */
+.modal-content {
+  position: relative;
+  width: 90%;
+  height: auto;
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 5px;
+  overflow: hidden;
+  animation: zoomIn 0.5s;
+}
+
+@keyframes zoomIn {
+  from {transform: scale(0.6);}
+  to {transform: scale(1);}
+}
+
+.modal.show {
+  display: flex;
+  opacity: 1;
+}
+
+/* Close button */
+.close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  color: #ffffff;
+  font-size: 35px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+/* Caption of modal image */
+.caption {
+  position: absolute;
+  bottom: 15px;
+  width: 100%;
+  text-align: center;
+  color: #ffffff;
+  font-size: 24px;
+}
+
+@media screen and (max-width: 768px) {
+  .gallery-item {
+    width: calc(50% - 20px);
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .gallery-item {
+    width: calc(100% - 20px);
+  }
+}
+</style>
+</head>
+<body>
+
+<h1>Responsive Modal Images</h1>
+
+<div class="gallery">
+  <img src="img_5terre.jpg" alt="Cinque Terre" class="gallery-item" onclick="openModal('modal1', 'Cinque Terre')">
+  <img src="img_forest.jpg" alt="Forest" class="gallery-item" onclick="openModal('modal2', 'Forest')">
+  <img src="img_lights.jpg" alt="Northern Lights" class="gallery-item" onclick="openModal('modal3', 'Nothern Lights')">
+  <img src="img_mountains.jpg" alt="Mountains" class="gallery-item" onclick="openModal('modal4', 'Mountains')">
+</div>
+
+<div id="modal1" class="modal">
+  <span class="close" onclick="closeModal('modal1')">&times;</span>
+  <img src="img_5terre.jpg" alt="Cinque Terre" class="modal-content">
+  <div class="caption"></div>
+</div>
+
+<div id="modal2" class="modal">
+  <span class="close" onclick="closeModal('modal2')">&times;</span>
+  <img src="img_forest.jpg" alt="Forest" class="modal-content">
+  <div class="caption"></div>
+</div>
+
+<div id="modal3" class="modal">
+  <span class="close" onclick="closeModal('modal3')">&times;</span>
+  <img src="img_lights.jpg" alt="Northern Lights" class="modal-content">
+  <div class="caption"></div>
+</div>
+
+<div id="modal4" class="modal">
+  <span class="close" onclick="closeModal('modal4')">&times;</span>
+  <img src="img_mountains.jpg" alt="Mountains" class="modal-content">
+  <div class="caption"></div>
+</div>
+
+<script>
+function openModal(modalId, caption) {
+  let modal = document.getElementById(modalId);
+  modal.style.display = "flex";
+  modal.classList.add("show");
+  let message = modal.querySelector(".caption");
+  message.innerText = caption;
+}
+
+function closeModal(modalId) {
+  let modal = document.getElementById(modalId);
+  modal.classList.remove("show");
+  setTimeout(function () {
+    modal.style.display = "none";
+    modal.querySelector(".caption").innerText = "";
+  }, 300);
+}
+</script>
+
+</body>
+</html>
+```
+# CSS Styling Images
+### Rounded Images
+Use `border-radius` to create rounded images.  
+### Polaroid Images/Cards
+```css
+div.polaroid {
+  width: 80%;
+  background-color: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+img {width: 100%}
+
+div.container {
+  text-align: center;
+  padding: 10px 20px;
+}
+```
+#### Image Opacity And Image Text Positioning
+**Opacity** scales from 0.0 to 1.0
+Image text can be set using the measurents to fit any position whether top left, bottom right, bottom left, centered, top right.  
+### CSS Image Hover Overlays
+#### Fade in Overlay
+```css
+<style>
+.container {
+  position: relative;
+  width: 50%;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: .5s ease;
+  background-color: #008CBA;
+}
+
+.container:hover .overlay {
+  opacity: 1;
+}
+
+.text {
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
+</style>
+</head>
+<body>
+
+<h2>Fade in Overlay</h2>
+
+<div class="container">
+  <img src="img_avatar.png" alt="Avatar" class="image">
+  <div class="overlay">
+    <div class="text">Hello World</div>
+  </div>
+</div>
+```
+#### Fade in a box
+```css
+.container {
+  position: relative;
+  width: 50%;
+}
+
+.image {
+  opacity: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: .5s ease;
+  backface-visibility: hidden;
+}
+
+.middle {
+  transition: .5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%)
+}
+
+.container:hover .image {
+  opacity: 0.3;
+}
+
+.container:hover .middle {
+  opacity: 1;
+}
+
+.text {
+  background-color: #4CAF50;
+  color: white;
+  font-size: 16px;
+  padding: 16px 32px;
+}
+</style>
+</head>
+<body>
+
+<h2>Fade in a Box</h2>
+
+<div class="container">
+  <img src="img_avatar.png" alt="Avatar" class="image" style="width:100%">
+  <div class="middle">
+    <div class="text">John Doe</div>
+  </div>
+</div>
+```
+#### Slide in Overlay from top 
+```css
+.container {
+  position: relative;
+  width: 50%;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.overlay {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  background-color: #008CBA;
+  overflow: hidden;
+  width: 100%;
+  height: 0;
+  transition: .5s ease;
+}
+
+.container:hover .overlay {
+  bottom: 0;
+  height: 100%;
+}
+
+.text {
+  white-space: nowrap; 
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  overflow: hidden;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
+</style>
+</head>
+<body>
+
+<h2>Slide in Overlay from the Top</h2>
+
+<div class="container">
+  <img src="img_avatar.png" alt="Avatar" class="image">
+  <div class="overlay">
+    <div class="text">Hello World</div>
+  </div>
+</div>
+```
+#### Slide in bottom
+```css
+.container {
+  position: relative;
+  width: 50%;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #008CBA;
+  overflow: hidden;
+  width: 100%;
+  height: 0;
+  transition: .5s ease;
+}
+
+.container:hover .overlay {
+  height: 100%;
+}
+
+.text {
+  white-space: nowrap; 
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  overflow: hidden;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
+</style>
+</head>
+<body>
+
+<h2>Slide in Overlay from the Bottom</h2>
+
+<div class="container">
+  <img src="img_avatar.png" alt="Avatar" class="image">
+  <div class="overlay">
+    <div class="text">Hello World</div>
+  </div>
+</div>
+```
+#### Slide in Left
+```css
+.container {
+  position: relative;
+  width: 50%;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #008CBA;
+  overflow: hidden;
+  width: 0;
+  height: 100%;
+  transition: .5s ease;
+}
+
+.container:hover .overlay {
+  width: 100%;
+}
+
+.text {
+  white-space: nowrap; 
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  overflow: hidden;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
+</style>
+</head>
+<body>
+
+<h2>Slide in Overlay from the Left</h2>
+
+<div class="container">
+  <img src="img_avatar.png" alt="Avatar" class="image">
+  <div class="overlay">
+    <div class="text">Hello World</div>
+  </div>
+</div>
+```
+#### Slide in from Right
+```css
+.container {
+  position: relative;
+  width: 50%;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.overlay {
+  position: absolute;
+  bottom: 0;
+  left: 100%;
+  right: 0;
+  background-color: #008CBA;
+  overflow: hidden;
+  width: 0;
+  height: 100%;
+  transition: .5s ease;
+}
+
+.container:hover .overlay {
+  width: 100%;
+  left: 0;
+}
+
+.text {
+  white-space: nowrap; 
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  overflow: hidden;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
+</style>
+</head>
+<body>
+
+<h2>Slide in Overlay from the Right</h2>
+
+<div class="container">
+  <img src="img_avatar.png" alt="Avatar" class="image">
+  <div class="overlay">
+    <div class="text">Hello World</div>
+  </div>
+</div>
+```
+
+
+
+### Flipping an image
+```css
+img:hover {
+  transform: scaleX(-1);
+}
+```
+# CSS Centering Images
+## Centering an image horizontally.  
+Can be achieved using `display: flex` or `margin: auto`.  
+### Using margin: auto
+Since image is an inline element by default, and `margin: auto` has no effect on inline elements, we must convert the image to a block element with `display: block`.   
+```css
+img {
+  display: block;
+  margin: auto;
+  width: 50%;
+}
+```
+### display: flex
+We put image inside a `<div>`.  
+Then we add the following CSS to the div container.  
+- `display: flex`
+- `justify-content: center` 
+
+Then we set a `width` for the image. The width, of course must be smaller than the width of the page.    
+```css
+div {
+  display: flex;
+  justify-content: center;
+}
+
+img {
+  width: 50%;
+}
+```
+## Centering an Image Vertically and Horizontally(true centering).  
+We can use `display: flex` or `display: grid`.  
+### Using display: flex
+We use a combination of: 
+- `display: flex`
+- `justify-content: center`
+- `align-items: center`
+- `height: 600px`
+```css
+div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 600px;
+  border: 1px solid black;
+}
+
+img {
+  width: 50%;
+}
+```
+### Using display: grid
+We use a combination of: 
+- `display: grid;`
+- `place-items: center;` (centers the image horizontally and vertically in the container)
+- `height: 600px;` (the height of the container)
+```css
+div {
+ display: grid;
+  place-items: center;
+  height: 600px;
+  border: 1px solid black;
+}
+
+img {
+  width: 50%;
+}
+```
+
+
 
