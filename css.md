@@ -1983,3 +1983,1208 @@ div.ex2 {
 }
 ```
 # CSS Variables
+The `var()` function is used to insert the value of a CSS variable.  
+CSS Variables have access to the DOM, which means that you can create variables with local or global scope, change the variable with JS, and change the variables based on media queries.  
+A good way to use CSS variables is when it comes to the colors of your design. Instead of copy and paste the same colors over and over again, you can place them in variables.
+## Declaring a Variable
+CSS variables can have a global or local scope.  
+Global variables can be accessed through the entire document, while local variables can be used only inside the selector where it is declared.  
+To create a global variable, declare it inside the `:root selector`. The `:root selector` matches the document's root element.  
+To create a local variable, declare it inside the selector that is going to use it.  
+A CSS variable name must begin with two dashes (--) and is case sensitive!  
+```css
+:root{
+  --primary-bg-color: green;/*global scope*/
+}
+.note{
+  --note-bg: yellow; /*local scope*/
+}
+```
+## The CSS var() function
+Used to insert the value of a declared CSS variable.  
+`var(--name, value)`  
+- **name** Required. The variable name (must start with two dashes.)
+- **value** Optional. The fallback value(used if the variable is not found.)  
+```css
+:root {
+  --primary-bg-color: #1e90ff;
+  --primary-color: #ffffff;
+}
+
+body {
+  background-color: var(--primary-bg-color);
+}
+
+.container {
+  color: var(--primary-bg-color);
+  background-color: var(--primary-color);
+  padding: 15px;
+}
+
+.container h2 {
+  border-bottom: 2px solid var(--primary-bg-color);
+}
+
+.container .note {
+  border: 1px solid var(--primary-bg-color);
+  padding: 10px;
+}
+```
+## Overriding Global Variables With Local Variable
+To achieve that, we can re-declare the global variable inside the local selector.  
+```css
+:root {
+  --primary-bg-color: #1e90ff;
+  --primary-color: #ffffff;
+}
+
+body {
+  background-color: var(--primary-bg-color);
+}
+
+.container {
+  color: var(--primary-bg-color);
+  background-color: var(--primary-color);
+  padding: 15px;
+}
+
+.container h2 {
+  border-bottom: 2px solid var(--primary-bg-color);
+}
+
+.container .note {
+  --primary-bg-color: red; /* local variable will override global */
+  border: 1px solid var(--primary-bg-color);
+  padding: 10px;
+}
+```
+## Adding a New Local Variable
+```css
+:root {
+  --primary-bg-color: #1e90ff;
+  --primary-color: #ffffff;
+}
+
+body {
+  background-color: var(--primary-bg-color);
+}
+
+.container {
+  color: var(--primary-bg-color);
+  background-color: var(--primary-color);
+  padding: 15px;
+}
+
+.container h2 {
+  border-bottom: 2px solid var(--primary-bg-color);
+}
+
+.container .note {
+  --note-border-color: red; /* new local variable */
+  border: 1px solid var(--note-border-color);
+  padding: 10px;
+}
+```
+## Changing Variables with JS
+### Example 
+```html
+<script>
+// Get the root element
+var r = document.querySelector(':root');
+
+// Function for getting a variable value
+function myFunction_get() {
+  // Get the styles (properties and values) for the root
+  var rs = getComputedStyle(r);
+  // Alert the value of the --primary-bg-color variable
+  alert("The value of --primary-bg-color is: " + rs.getPropertyValue('--primary-bg-color'));
+}
+
+// Function for setting a variable value
+function myFunction_set() {
+  // Set the value of variable --primary-bg-color to another value (in this case "green")
+  r.style.setProperty('--primary-bg-color', 'green');
+}
+</script>
+```
+## CSS Variables in Media Queries
+```css
+:root {
+  --primary-bg-color: #1e90ff;
+  --primary-color: #ffffff;
+}
+
+body {
+  background-color: var(--primary-bg-color);
+}
+
+.container {
+  --fontsize: 20px;
+  color: var(--primary-bg-color);
+  background-color: var(--primary-color);
+  padding: 15px;
+  font-size: var(--fontsize);
+}
+
+.container h2 {
+  border-bottom: 2px solid var(--primary-bg-color);
+}
+
+@media screen and (min-width: 450px) {
+  .container {
+    --fontsize: 40px;
+  }
+}
+```
+```css
+:root {
+  --primary-bg-color: #1e90ff;
+  --primary-color: #ffffff;
+}
+
+body {
+  background-color: var(--primary-bg-color);
+}
+
+.container {
+  --fontsize: 20px;
+  color: var(--primary-bg-color);
+  background-color: var(--primary-color);
+  padding: 15px;
+  font-size: var(--fontsize);
+}
+
+.container h2 {
+  border-bottom: 2px solid var(--primary-bg-color);
+}
+
+@media screen and (min-width: 450px) {
+  .container {
+    --fontsize: 40px;
+  }
+  :root {
+    --primary-bg-color: lightblue;
+  }
+}
+```
+# @property Rule
+Used to define custom CSS properties (CSS Variables) directly in the stylesheet without having to run any JS.  
+The `@property` rule has data type checking and constraining, sets a default value, and specifies the inherit behaviour.
+### Syntax
+```css
+/*creates a custom property named --myColor, defines it as a color property, specifies that it will inherit values from its parent elements, and its default value is lightgray.*/
+@property --myColor {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: lightgray;
+}
+```
+### Using the Custom Property
+```css
+body {
+  background-color: var(--myColor);
+}
+```
+### Benefits of using @Property
+- **Data type checking:** You must specify the data type of the custom property:`<number>`, `<color>`, `<length>`, `<percentage>`, `<length-percentage>`(either length or percentage), `<image>`(url(), linear-gradient()), `<url>`, `<integer>`, `<angle>`, `<time>`, `<resolution>`(eg. 300dpi), `<transform-function>`(eg. rotate(10deg)), `<custom-ident>`, `*`(Universal syntax - Accepts any valid CSS value).This prevents errors and ensures that custom properties are used correctly
+- **Set default value:** You must set a default value for the custom property. This ensures that if an invalid value is assigned later, the browser uses the default value as a fallback
+- **Set inheritance behavior:** You must specify whether the custom property will inherit values from its parent elements or not. This ensures that you will have full control over inheritance
+
+```css
+@property --my-bg-color {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: lightgray;
+}
+
+@property --my-txt-color {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: darkblue;
+}
+
+div {
+  width: 300px;
+  height: 150px;
+  padding: 15px;
+  background-color: var(--my-bg-color);
+  color: var(--my-txt-color);
+}
+```
+In the example below, we are overriding the custom property in class.  
+```css
+@property --my-bg-color {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: lightgray;
+}
+
+div {
+  width: 300px;
+  height: 150px;
+  padding: 15px;
+  background-color: var(--my-bg-color);
+}
+
+.fresh {
+  --my-bg-color: #ff6347;
+}
+
+.nature {
+  --my-bg-color: rgb(120, 180, 30);
+}
+```
+### Use of Inherits Value
+```css
+/* the custom property WILL NOT inherit values from its parent elements*/
+@property --my-bg-color {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: lightgray;
+}
+```
+### Create Smooth Animation with @property
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+@property --startColor {
+  syntax: "<color>";
+  initial-value: #EADEDB;
+  inherits: false;
+}
+
+@property --endColor {
+  syntax: "<color>";
+  initial-value: #BC70A4;
+  inherits: false;
+}
+
+.ex1 {
+  background: linear-gradient(var(--startColor), var(--endColor));
+  animation: gradient 3s linear infinite;
+}
+
+@keyframes gradient {
+  0%,
+  100% {
+    --startColor: #EADEDB;
+    --endColor: #BC70A4;
+  }
+  50% {
+    --startColor: #BC70A4;
+    --endColor: #BFD641;
+  }
+}
+
+#grad1 {
+  height: 200px;
+}
+</style>
+</head>
+<body>
+
+<h1>The @property Rule</h1>
+
+<p>The @property rule is here used to animate a gradient:</p>
+
+<div id="grad1" class="ex1"></div>
+
+</body>
+</html>
+```
+# CSS Media Queries
+Media queries allow you to apply styles based on the characteristics of a device or the environment displaying the web page.    
+Essential for creating responsive web pages.  
+## Media  Query Syntax
+```
+@media [not] media-type and (media-feature: value) and (media-feature: value) {
+  /*CSS rule to apply.*/
+}
+```
+`media-type` is optional. However, if you use **not**, you must specify a media-type.  
+The result of a media query is true if the specified media-type matches the type of device, and all media-features are true.  
+When a media query is true, the corresponding style rules are applied, following the normal cascading rules.  
+**not:** This optional keyword inverts the meaning of the entire media query.
+**and:** This keyword combines a media-type and one or more media-features. 
+**,** Acts like an OR operator;the style applies if any of the queries is true.  
+## CSS Media Types
+Optional. Specifies the type of media the styles are intended for.  
+If a media type is omitted, it will be set to `all`.  
+- `all` Used for all media type devices.  
+- `print` Used for print preview mode.  
+- `screen` Used for computer screens, tablets and smart-phones.  
+- `speech` Intended for speech synthesizers that read the page aloud.  
+### CSS Media Features
+- `max-height`	Maximum height of the viewport
+- `min-height`	Minimum height of the viewport
+- `height	Height` of the viewport (including scrollbar)
+- `max-width`	Maximum width of the viewport
+- `min-width`	Minimum width of the viewport
+- `width`	Width of the viewport (including scrollbar)
+- `orientation`	Orientation of the viewport (landscape or portrait)
+- `resolution`	Screen resolution
+- `prefers-color-scheme`	User's preferred color scheme (light or dark)  
+- `prefers-reduced-motion` user may have asked to reduce motion, such as animations and transitions.   
+**hover** Detects if the primary input mechanism can hover over elements (e.g., a mouse vs. a touchscreen).   
+##### Example
+```css
+@media screen and (min-width: 480px) and (max-width: 768px) {
+  body {
+    background-color: lightgreen;
+  }
+}
+```
+#### Media Queries for Columns
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+/* Container for flexboxes */
+.container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* Create four equal columns */
+.column {
+  flex: 25%;
+  padding: 20px;
+}
+
+/* On screens that are 992px wide or less, go from four columns to two columns */
+@media screen and (max-width: 992px) {
+  .column {
+    flex: 50%;
+  }
+}
+
+/* On screens that are 600px wide or less, make the columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .container {
+    flex-direction: column;
+  }
+}
+</style>
+</head>
+<body>
+
+<h2>Responsive four-column layout</h2>
+<p><strong>Resize the browser window to see the effect.</strong></p>
+<p>On screens that are 992px wide or less, the columns will resize from four columns to two columns. On screens that are 600px wide or less, the columns will stack on top of each other instead of next to eachother.</p>
+
+<div class="container">
+  <div class="column" style="background-color:#aaa;">
+    <h2>Column 1</h2>
+    <p>Some text..</p>
+  </div>
+  
+  <div class="column" style="background-color:#bbb;">
+    <h2>Column 2</h2>
+    <p>Some text..</p>
+  </div>
+  
+  <div class="column" style="background-color:#ccc;">
+    <h2>Column 3</h2>
+    <p>Some text..</p>
+  </div>
+  
+  <div class="column" style="background-color:#ddd;">
+    <h2>Column 4</h2>
+    <p>Some text..</p>
+  </div>
+</div>
+
+</body>
+</html>
+```
+#### Media Queries For Menus
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  margin: 0;
+  padding: 0;
+}
+
+h2, p {
+  margin: 10px;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  background-color: #333333;
+  display: flex;
+}
+
+ul li a {
+  display: block;
+  color: white;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+ul li a:hover {
+  background-color: #111111;
+}
+
+/* For viewport width 600px or less, make the menu links stack on top of each other */
+@media screen and (max-width: 600px) {
+  ul {flex-direction: column;}
+}
+</style>
+</head>
+<body>
+
+<ul>
+  <li><a href="#home">Home</a></li>
+  <li><a href="#news">News</a></li>
+  <li><a href="#contact">Contact</a></li>
+  <li><a href="#about">About</a></li>
+</ul>
+
+<h2>Responsive navigation menu</h2>
+
+<p>When the screen is less than 600px, the navigation menu will be displayed vertically instead of horizontally.</p>
+
+<p><strong>Resize the browser window to see the effect.</strong></p>
+
+
+</body>
+</html>
+```
+#### Hide Elements With Media Queries 
+```css
+/* Hide element if the viewport width is 600px or less */
+@media screen and (max-width: 600px) {
+  #div1 {
+    display: none;
+  }
+}
+```
+#### Change Font Size with Media Queries
+```css
+/* If viewport width is 600px or more, set font-size to 80px */
+@media screen and (min-width: 600px) {
+  #div1 {
+    font-size: 80px;
+  }
+}
+```
+### Media Queries For Screen Orientation
+Media queries can also be used to change the layout of a page depending on the orientation of the screen.  
+Here, we change the background-color of the body, if the screen orientation is in landscape mode:  
+```css
+@media only screen and (orientation: landscape) {
+  body {
+    background-color: lightblue;
+  }
+}
+```
+### Media Queries for Users with Preferences
+```css
+@media (prefers-reduced-motion: reduce) {
+  *{
+    animation: none !important;
+    transition: none !important
+  }
+}
+```
+# RWD 
+Key components in responsive web design are: 
+- Viewport `<meta>` tag. 
+- Flexible layout (grid and flex)
+- Media queries
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Lucida Sans", sans-serif;
+  font-size: 17px;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-areas:
+    'header'
+    'menu'
+    'main'
+    'facts'
+    'footer';
+  background-color: white;
+  gap: 10px;  
+}
+
+.header {
+  grid-area: header;
+  background-color: purple;
+  text-align: center;
+  color: #ffffff;
+}
+
+.header > h1 {
+  font-size: 40px;
+}
+
+.menu {
+  grid-area: menu;
+  }
+  
+.menu ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menu li {
+  padding: 8px;
+  margin-bottom: 7px;
+  background-color: #33b5e5;
+  color: #ffffff;
+}
+
+.menu li:hover {
+  background-color: #0099cc;
+}
+  
+.content {
+  grid-area: main;
+}
+
+.content > h1 {
+  font-size: 30px;
+  margin-bottom: 7px;
+}
+
+.content > p {
+  margin-bottom: 7px;
+}
+
+.facts {
+  grid-area: facts;
+  border: 1px solid #0099cc;
+  background-color: beige;
+  padding: 10px;
+}
+
+.facts > h2 {
+  font-size: 20px;
+}
+
+.facts li {
+  margin-bottom: 5px;
+}
+
+.footer {
+  grid-area: footer;
+  background-color: #0099cc;
+  color: #ffffff;
+  text-align: center;
+}
+
+@media (min-width: 600px) {
+  .header {grid-area: 1 / span 6;}
+  .menu {grid-area: 2 / span 1;}
+  .content {grid-area: 2 / span 4;}
+  .facts {grid-area: 3 / span 6;}
+  .footer {grid-area: 4 / span 6;}
+}
+
+@media (min-width: 768px) {
+  .header {grid-area: 1 / span 6;}
+  .menu {grid-area: 2 / span 1;}
+  .content {grid-area: 2 / span 4;}
+  .facts {grid-area: 2 / span 1;}
+  .footer {grid-area: 3 / span 6;}
+}
+</style>
+</head>
+<body>
+
+<div class="grid-container">
+
+<div class="header"><h1>Chania</h1></div>
+
+<div class="menu">
+  <ul>
+    <li>The Flight</li>
+    <li>The City</li>
+    <li>The Island</li>
+    <li>The Food</li>
+  </ul>
+</div>
+
+<div class="content">
+  <h1>The City</h1>
+  <p>Chania is the capital of the Chania region on the island of Crete.</p>
+  <p>The city can be divided in two parts, the old town and the modern city. The old town is situated next to the old harbour and is the matrix around which the whole urban area was developed.</p>
+  <p>Chania lies along the north west coast of the island Crete.</p>
+</div>  
+
+<div class="facts">
+  <h2>Facts:</h2>
+  <ul>
+    <li>Chania is a city on the island of Crete</li>
+    <li>Crete is a Greek island in the Mediterranean Sea</li>
+  </ul>
+</div>
+
+<div class="footer"><p>Resize the browser window to see the responsive effect.</p></div>
+  
+</div>
+
+</body>
+</html>
+```
+## The Viewport
+The visible area of a web page.  
+You should include the `<meta>` element in the `<head>` section of all of all your web pages.    
+```html
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+```
+This gives the browser instructions on how to control the page's dimensions and scaling.  
+The `width=device-width` part sets the width of the page to follow the screen-width of the device (which will vary depending on the device).   
+The `initial-scale=1.0` part sets the initial zoom level when the page is first loaded by the browser.  
+Some additional rules to follow:   
+**Do NOT use large fixed-width elements** For example, if an image has a width wider than the viewport, it causes the viewport to scroll horizontally. Remember to adjust this content to fit within the width of the viewport.  
+**Do NOT let the content rely on a particular width to render well**  Since screen dimensions vary widely between devices, content should not rely on a particular viewport width to render well.  
+**Use CSS media queries to apply different styling for small and large screens**  Setting large absolute CSS widths for page elements will cause the elements to be too wide for smaller devices. Instead, consider using relative width values, such as width: 100%. Also, be careful of using large absolute positioning values. It may cause the element to fall outside the viewport on small devices.  
+## RWD - Media Queries
+```css
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Lucida Sans", sans-serif;
+  font-size: 17px;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-areas:
+    'header'
+    'menu'
+    'main'
+    'facts'
+    'footer';
+  background-color: white;
+  gap: 10px;  
+}
+
+.header {
+  grid-area: header;
+  background-color: purple;
+  text-align: center;
+  color: #ffffff;
+}
+
+.header > h1 {
+  font-size: 40px;
+}
+
+.menu {
+  grid-area: menu;
+  }
+  
+.menu ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menu li {
+  padding: 8px;
+  margin-bottom: 7px;
+  background-color: #33b5e5;
+  color: #ffffff;
+}
+
+.menu li:hover {
+  background-color: #0099cc;
+}
+  
+.content {
+  grid-area: main;
+}
+
+.content > h1 {
+  font-size: 30px;
+  margin-bottom: 7px;
+}
+
+.content > p {
+  margin-bottom: 7px;
+}
+
+.facts {
+  grid-area: facts;
+  border: 1px solid #0099cc;
+  background-color: beige;
+  padding: 10px;
+}
+
+.facts > h2 {
+  font-size: 20px;
+}
+
+.facts li {
+  margin-bottom: 5px;
+}
+
+.footer {
+  grid-area: footer;
+  background-color: #0099cc;
+  color: #ffffff;
+  text-align: center;
+}
+
+@media (min-width: 600px) {
+  .header {grid-area: 1 / span 6;}
+  .menu {grid-area: 2 / span 1;}
+  .content {grid-area: 2 / span 4;}
+  .facts {grid-area: 2 / span 1;}
+  .footer {grid-area: 3 / span 6;}
+}
+</style>
+</head>
+<body>
+
+<div class="grid-container">
+
+<div class="header"><h1>Chania</h1></div>
+
+<div class="menu">
+  <ul>
+    <li>The Flight</li>
+    <li>The City</li>
+    <li>The Island</li>
+    <li>The Food</li>
+  </ul>
+</div>
+
+<div class="content">
+  <h1>The City</h1>
+  <p>Chania is the capital of the Chania region on the island of Crete.</p>
+  <p>The city can be divided in two parts, the old town and the modern city. The old town is situated next to the old harbour and is the matrix around which the whole urban area was developed.</p>
+  <p>Chania lies along the north west coast of the island Crete.</p>
+</div>  
+
+<div class="facts">
+  <h2>Facts:</h2>
+  <ul>
+    <li>Chania is a city on the island of Crete</li>
+    <li>Crete is a Greek island in the Mediterranean Sea</li>
+  </ul>
+</div>
+
+<div class="footer"><p>Resize the browser window to see the responsive effect.</p></div>
+  
+</div>
+
+</body>
+</html>
+```
+### Typical Device Breakpoints
+There are tons of screens and devices with different heights and widths, so it is hard to create an exact breakpoint for each device. To keep things simple you could target five groups:  
+```css
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {...}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {...}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {...}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {...}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {...}
+```
+## RWD - Images
+### Using width Property
+If the `width` property is set to a `percentage` and the `height` property set to `auto`, the image will be responsive and scale up and down.    
+```css
+img {
+  width: 100%;
+  height: auto;
+}
+```
+### Using the max-width Property
+If the max-width propert is set to 100%, the image will scale up and down if it has to, but never scale up to be larger than it's original size.  
+```css
+img {
+  max-width: 100%;
+  height: auto;
+}
+```
+### Background Images
+Background images can also respond to resizing and scaling.  
+- `background-size: contain;` The background image will scale up and down, and tries to fit the content area. However, the image will keep its aspect ratio (the proportional relationship between the image's width and height):  
+```css
+div {
+  width: 100%;
+  height: 400px;
+  background-image: url('img_flowers.jpg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  border: 1px solid black;
+}
+```
+- `background-size: 100% 100%;` The background image will stretch to cover the entire content area:  
+```css
+div {
+  width: 100%;
+  height: 400px;
+  background-image: url('img_flowers.jpg');
+  background-size: 100% 100%;
+  border: 1px solid black;
+}
+```
+- `background-size: cover;` The background image will scale to cover the entire content area. The "cover" value keeps the aspect ratio, and some part of the background image may be clipped:    
+```css
+div {
+  width: 100%;
+  height: 400px;
+  background-image: url('img_flowers.jpg');
+  background-size: cover;
+  border: 1px solid black;
+}
+```
+### Different Images For Different Devices.
+```css
+/* For width smaller than 400px: */
+body {
+  background-image: url('img_smallflower.jpg');
+}
+
+/* For width 400px and larger: */
+@media only screen and (min-width: 400px) {
+  body {
+    background-image: url('img_flowers.jpg');
+  }
+}
+```
+### The HTML `<picture>` Element
+Gives web developers more flexibility in specifying image resources.  
+The most common use of the `<picture>` element will be for images used in responsive designs. Instead of having one image that is scaled up or down based on the viewport width, multiple images can be designed to more nicely fill the browser viewport.  
+The `<picture>` element works similar to the `<video>` and `<audio>` elements. You set up different sources, and the first source that fits the preferences is the one being used: 
+```html
+<picture>
+  <source srcset="img_smallflower.jpg" media="(max-width: 400px)">
+  <source srcset="img_flowers.jpg">
+  <img src="img_flowers.jpg" alt="Flowers">
+</picture>
+```
+The `srcset` attribute is required, and defines the source of the image.  
+The `media` attribute is optional, and accepts the media queries you find in CSS @media rule.  
+You should also define an `<img>` element for browsers that do not support the `<picture>` element.  
+### Responsive Image Grid
+```html
+<!DOCTYPE html>
+<html>
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial;
+}
+
+.header {
+  text-align: center;
+  padding: 32px;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 4px;
+}
+
+/* Create four equal columns that sits next to each other */
+.column {
+  flex: 25%;
+  max-width: 25%;
+  padding: 0 4px;
+}
+
+.column img {
+  margin-top: 8px;
+  vertical-align: middle;
+}
+
+/* Responsive layout - makes a two column-layout instead of four columns */
+@media screen and (max-width: 800px) {
+  .column {
+    flex: 50%;
+    max-width: 50%;
+  }
+}
+
+/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .column {
+    flex: 100%;
+    max-width: 100%;
+  }
+}
+</style>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <h1>Responsive Image Gallery</h1>
+  <p>Resize the browser window to see the responsive effect.</p>
+</div>
+
+<!-- Photo Grid -->
+<div class="container"> 
+  <div class="column">
+    <img src="/w3images/wedding.jpg" style="width:100%">
+    <img src="/w3images/rocks.jpg" style="width:100%">
+    <img src="/w3images/falls2.jpg" style="width:100%">
+    <img src="/w3images/paris.jpg" style="width:100%">
+    <img src="/w3images/nature.jpg" style="width:100%">
+    <img src="/w3images/mist.jpg" style="width:100%">
+    <img src="/w3images/paris.jpg" style="width:100%">
+  </div>
+  
+  <div class="column">
+    <img src="/w3images/underwater.jpg" style="width:100%">
+    <img src="/w3images/ocean.jpg" style="width:100%">
+    <img src="/w3images/wedding.jpg" style="width:100%">
+    <img src="/w3images/mountainskies.jpg" style="width:100%">
+    <img src="/w3images/rocks.jpg" style="width:100%">
+    <img src="/w3images/underwater.jpg" style="width:100%">
+  </div> 
+   
+  <div class="column">
+    <img src="/w3images/wedding.jpg" style="width:100%">
+    <img src="/w3images/rocks.jpg" style="width:100%">
+    <img src="/w3images/falls2.jpg" style="width:100%">
+    <img src="/w3images/paris.jpg" style="width:100%">
+    <img src="/w3images/nature.jpg" style="width:100%">
+    <img src="/w3images/mist.jpg" style="width:100%">
+    <img src="/w3images/paris.jpg" style="width:100%">
+  </div>
+  
+  <div class="column">
+    <img src="/w3images/underwater.jpg" style="width:100%">
+    <img src="/w3images/ocean.jpg" style="width:100%">
+    <img src="/w3images/wedding.jpg" style="width:100%">
+    <img src="/w3images/mountainskies.jpg" style="width:100%">
+    <img src="/w3images/rocks.jpg" style="width:100%">
+    <img src="/w3images/underwater.jpg" style="width:100%">
+  </div>
+</div>
+
+</body>
+</html>
+```
+## RWD - Videos
+### Using the width property
+If the `width` property is set to `100%`, the video player will be responsive and scale up and down:    
+```css
+video {
+  width: 100%;
+  height: auto;
+}
+```
+### Using the max-width Property
+If the `max-width` property is set to 100%, the video player will scale down if it has to, but never scale up to be larger than its original size:  
+```css
+video {
+  max-width: 100%;
+  height: auto;
+}
+```
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Lucida Sans", sans-serif;
+  font-size: 17px;
+}
+
+video {
+  width: 100%;
+  height: auto;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-areas:
+    'header'
+    'menu'
+    'main'
+    'facts'
+    'footer';
+  background-color: white;
+  gap: 10px;  
+}
+
+.header {
+  grid-area: header;
+  background-color: purple;
+  text-align: center;
+  color: #ffffff;
+}
+
+.header > h1 {
+  font-size: 40px;
+}
+
+.menu {
+  grid-area: menu;
+  }
+  
+.menu ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menu li {
+  padding: 8px;
+  margin-bottom: 7px;
+  background-color: #33b5e5;
+  color: #ffffff;
+}
+
+.menu li:hover {
+  background-color: #0099cc;
+}
+  
+.content {
+  grid-area: main;
+}
+
+.content > h1 {
+  font-size: 30px;
+  margin-bottom: 7px;
+}
+
+.content > p {
+  margin-bottom: 7px;
+}
+
+.facts {
+  grid-area: facts;
+  border: 1px solid #0099cc;
+  background-color: beige;
+  padding: 10px;
+}
+
+.facts > h2 {
+  font-size: 20px;
+}
+
+.facts li {
+  margin-bottom: 5px;
+}
+
+.footer {
+  grid-area: footer;
+  background-color: #0099cc;
+  color: #ffffff;
+  text-align: center;
+}
+
+@media (min-width: 600px) {
+  .header {grid-area: 1 / span 6;}
+  .menu {grid-area: 2 / span 1;}
+  .content {grid-area: 2 / span 4;}
+  .facts {grid-area: 3 / span 6;}
+  .footer {grid-area: 4 / span 6;}
+}
+
+@media (min-width: 768px) {
+  .header {grid-area: 1 / span 6;}
+  .menu {grid-area: 2 / span 1;}
+  .content {grid-area: 2 / span 4;}
+  .facts {grid-area: 2 / span 1;}
+  .footer {grid-area: 3 / span 6;}
+}
+</style>
+</head>
+<body>
+
+<div class="grid-container">
+
+<div class="header"><h1>Chania</h1></div>
+
+<div class="menu">
+  <ul>
+    <li>The Flight</li>
+    <li>The City</li>
+    <li>The Island</li>
+    <li>The Food</li>
+  </ul>
+</div>
+
+<div class="content">
+  <h1>The City</h1>
+  <p>Chania is the capital of the Chania region on the island of Crete.</p>
+  <p>The city can be divided in two parts, the old town and the modern city. The old town is situated next to the old harbour and is the matrix around which the whole urban area was developed.</p>
+  <p>Chania lies along the north west coast of the island Crete.</p>
+  <video width="400" controls>
+    <source src="mov_bbb.mp4" type="video/mp4">
+    <source src="mov_bbb.ogg" type="video/ogg">
+    Your browser does not support HTML5 video.
+  </video>
+</div>  
+
+<div class="facts">
+  <h2>Facts:</h2>
+  <ul>
+    <li>Chania is a city on the island of Crete</li>
+    <li>Crete is a Greek island in the Mediterranean Sea</li>
+  </ul>
+</div>
+
+<div class="footer"><p>Resize the browser window to see the responsive effect.</p></div>
+  
+</div>
+
+</body>
+</html>
+```
+## RWD - Frameworks
+- W3.CSS
+- Bootstrap
