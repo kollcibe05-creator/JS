@@ -1426,6 +1426,553 @@ img {
   width: 50%;
 }
 ```
+# CSS Image Filter Effects
+The CSS `filter` property is used to add visual effects like blur and saturation to elements.  
+With it, you can use one of the following CSS functions:
+- **blur()**
+- **brightness()**
+- **contrast()**
+- **drop-shadow()**
+- **grayscale()**
+- **hue-rotate()**
+- **invert()**
+- **opacity()**
+- **saturate()**
+- **sepia()**
+#### blur()
+A larger value will create more blur.  
+If no value is given, 0 is used(no effect)
+```css
+#img1 {
+  filter: blur(2px);
+}
 
+#img2 {
+  filter: blur(6px);
+}
+```
+#### contrast()
+- 100% is default and represents the original contrast.  
+- Values over 100% increases the contrast.  
+- Values under 100% decreases the contrast.  
+- 0% will make the image completely gray. 
 
+```css
+#img1 {
+  filter: contrast(150%);
+}
 
+#img2 {
+  filter: contrast(50%);
+}
+```
+#### brightness()
+- 100% is default, and represents the original brightness
+- Values over 100% will provide brighter results
+- Values under 100% will provide darker results
+- 0% will make the image completely black
+```css
+#img1 {
+  filter: brightness(150%);
+}
+
+#img2 {
+  filter: brightness(50%);
+}
+```
+#### drop-shadow()
+```css
+#img1 {
+  filter: drop-shadow(8px 8px 10px gray); 
+}
+
+#img2 {
+  filter: drop-shadow(10px 10px 7px lightblue);
+}
+```
+#### grayscale() 
+Converts an image to grayscale.  
+- 100% (or 1) will make the image completely grayscale
+- 0% (or 0) will have no effect
+```css
+#img1 {
+  filter: grayscale(1);
+}
+
+#img2 {
+  filter: grayscale(60%);
+}
+
+#img3 {
+  filter: grayscale(0.4);
+}
+```
+#### hue-rotate()
+Applies a color rotation to an element.  
+The value defines the number of degrees around the color circle the image will be adjusted.  
+A positive hue rotation increases the hue value, while a negative rotation decreases the hue value.  
+0deg represents the original image.  
+```css
+#img1 {
+  filter: hue-rotate(200deg);
+}
+
+#img2 {
+  filter: hue-rotate(90deg);
+}
+
+#img3 {
+  filter: hue-rotate(-90deg);
+}
+```
+#### invert()
+Inverts the color of an image.  
+- 100%(or 1) will fully invert the colors.  
+- 0%(or 0) will have no effect.  
+```css
+#img1 {
+  filter: invert(0.3);
+}
+
+#img2 {
+  filter: invert(70%);
+}
+
+#img3 {
+  filter: invert(100%);
+}
+```
+#### opacity()
+- 100% (or 1) will have no effect
+- 50% (or 0.5) will make the element 50% transparent
+- 0% (or 0) will make the element completely transparent  
+```css
+#img1 {
+  filter: opacity(80%);
+}
+
+#img2 {
+  filter: opacity(50%);
+}
+
+#img3 {
+  filter: opacity(0.2);
+}
+```
+#### saturate()
+- 100% (or 1) will have no effect
+- 0% (or 0) will make the element completely unsaturated
+- 200% (or 2) will make the element super saturated   
+```css
+#img1 {
+  filter: saturate(0);
+}
+
+#img2 {
+  filter: saturate(100%);
+}
+
+#img3 {
+  filter: saturate(200%);
+}
+```
+#### sepia()
+Converts an image to a sepia tone(a warmer, more-brown/yellow color).  
+- 0% (or 0) will have no effect
+- 100% (or 1) applies full sepia effect
+```css
+#img1 {
+  filter: sepia(1);
+}
+
+#img2 {
+  filter: sepia(60%);
+}
+
+#img3 {
+  filter: sepia(0.4);
+}
+```
+# CSS Image Shapes
+With CSS its so easy to shape(clip) images to circles, ellipses and polygons. 
+- **clip-path**
+- **shape-outside**
+- **circle()**
+- **ellipse()**
+- **polygon()**
+## CSS clip-path and the circle() Functions
+The `clip-path` lets you clip an element to a basic shape.  
+The `circle()` function defines a circle with a radius and position.  
+```css
+img {
+  clip-path: circle(50%);  /*We're clipping to a circle with 50% radius*/
+} 
+```
+One can also specify the center of the circle which can be a length or percentage value.  
+It can also be a value such as left, right, bottom or top.  
+The default value is center
+```css
+/*Clipping an image to a circle with 50% radius and position the center to the right(semi-circular in shape)*/
+img {
+  clip-path: circle(50% at right);
+}
+```
+## shape-outside and circle()
+`shape-outside` lets you define a shape for the wrapping of the inline content.  
+`circle()` function defines a circle with a radius and a position.  
+```css
+img {
+  /**The content wraps around the circle at 45% of the total length, semi-circular if the image is at the start of the page.*/
+  float: left;
+  clip-path: circle(40%);
+  shape-outside: circle(45%);
+}
+```
+## clip-path and ellipse()
+`ellipse()` function defines an ellipse with two radii x and y.  
+```css
+/*Clip an image to an ellipse with 50% radius x and 35% radius y*/
+img {
+  clip-path: ellipse(50% 35%);
+}
+```
+We can also specify the center of the ellipse which can also be a length or a percentage.  
+It can also be a value such as left, right, top or bottom.  
+Default also center.  
+```css
+/*laconically half ellipse*/
+img {
+  clip-path: ellipse(50% 35% at right);
+}
+```
+## shape-outside and ellipse()
+```css
+img {
+  float: left;
+  clip-path: ellipse(40% 50%);
+  shape-outside: ellipse(45% 50%);
+}
+```
+## polygon()
+Defines a polygon.  
+This function contains points that define the polygon.  
+Can be length or percentage value.  
+Each point is a pair of x and y coordinates.  
+0 0 defines the left top corner and 100% 100% defines the right bottom corner.     
+The `polygon()` function is used within the `clip-path` property and the `shape-outside` property.   
+```css
+img {
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+}
+```
+# CSS object-fit Property
+`object-fit` property is used to specify how an `<img>` or `<video>` should be resized to fit its container.  
+Can take one of the following values.  
+- `fill` - This is default. Does not preserve the aspect ratio. The image is resized to fill the container (the image will be stretched or squeezed to fit).
+- `cover` - Preserves the aspect ratio, and the image fills the container. Cuts overflowing content if needed.
+- `contain` - Preserves the aspect ratio, and fits the image inside the container, without cutting - leaves empty space if needed.
+- `none` - The image is not resized.
+- `scale-down` - the image is scaled down to the smallest version of `none` or `contain`.
+# CSS Object-position Property
+Used together with `object-fit` to specify how an `<img>` or `<video>` should be positioned with x/y coordinates within its container.  
+The first value controls the x-axis and the second value controls the y-axis. 
+The value can be a string (left, center or right), or a number (in px or %).  
+Negative values are also allowed.  
+```css
+/*To cut an image further from the left margin*/
+.image-container {
+  width: 200px;
+  height: 300px;
+  border: 1px solid black;
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 80% 100%;
+}
+```
+```css
+/*To cut the image nearer to the left margin*/
+.image-container {
+  width: 200px;
+  height: 300px;
+  border: 1px solid black;
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 15% 100%;
+}
+```
+# CSS Masking
+Masking allows one to creat a mask layer to place over an element to partially or fully hide portions of the element.  
+`mask-image` property specifies the mask layer image.  
+The mask layer can be a PNG, an SVG image, a CSS gradient, or an SVG `<mask>` element.  
+## Use of a PNG image as the mask layer
+To use such, use a url() value to pass in the mask layer image.  
+The mask image needs to have a transparent or semi-transparent area. Black indicates fully transparent.  
+```css
+.the-image-to-mask {
+  -webkit-mask-image: url(w3logo.png);
+  mask-image: url(w3logo.png);
+  mask-repeat: no-repeat;
+}
+```
+The `mask-image` property defines the image to be used as a mask layer for an element.  
+`mask-repeat` property specifies if or how a mask image will be repeated.  
+## Repeat the Mask Layer Image
+Without setting the `mask-repeat` property to `no-repeat`, the mask image(probably a text) will be repeated all over the image.   
+
+## mask-position
+Sets the starting point of a mask image (relative to the mask position area).  
+By default, a mask image is placed at the top left corner of an element, and repeated both vertically and horizontally.   
+```css
+.mask1 {
+  /*Positioned at the center of the image*/
+  -webkit-mask-image: url(w3logo.png);
+  mask-image: url(w3logo.png);
+  mask-repeat: no-repeat;
+  mask-position: center;   
+}
+```
+## All the Masking Properties
+- `mask-clip`	Specifies which area is affected by a mask image
+- `mask-composite`	Specifies a compositing operation used on the current mask layer with the mask layers below it
+- `mask-image`	Specifies an image to be used as a mask layer for an element
+- `mask-mode`	Specifies whether the mask layer image is treated as a luminance mask or as an alpha mask
+- `mask-origin`	Specifies the origin position (the mask position area) of a mask layer image
+- `mask-position`	Sets the starting position of a mask layer image (relative to the mask position area)
+- `mask-repeat`	Specifies how the mask layer image is repeated
+- `mask-size`	Specifies the size of a mask layer image
+- `mask-type`	Specifies whether an SVG `<mask>` element is treated as a luminance mask or as an alpha mask. 
+
+## CSS Gradient Mask Layers
+#### Linear Gradient
+```css
+.mask1 {
+  -webkit-mask-image: linear-gradient(black, transparent);
+  mask-image: linear-gradient(black, transparent);
+}
+```
+#### Radial Gradient Mask Layer -Circle
+```css
+.mask2 {
+  -webkit-mask-image: radial-gradient(circle, black 50%, rgba(0, 0, 0, 0.5) 50%);
+  mask-image: radial-gradient(circle, black 50%, rgba(0, 0, 0, 0.5) 50%);
+}
+```
+#### Radial Gradient Mask Layer - Ellipse
+```css
+.mask3 {
+  -webkit-mask-image: radial-gradient(ellipse, black 50%, rgba(0, 0, 0, 0.5) 50%);
+  mask-image: radial-gradient(ellipse, black 50%, rgba(0, 0, 0, 0.5) 50%);
+}
+```
+#### Conic Gradient Mask Layer
+```css
+.mask3 {
+  -webkit-mask-image: conic-gradient(black 0deg, transparent 360deg);
+  mask-image: conic-gradient(black 0deg, transparent 360deg);
+}
+```
+## CSS SVG Mask Layers
+The SVG `<mask>` element can be used to apply a mask to an image.  
+#### Circle
+The SVG `<circle>` element is used to create a circle.  
+```html
+<svg width="600" height="400" xmlns="http://www.w3.org/2000/svg">
+  <mask id="svgmask1">
+    <circle r="150" cx="200" cy="200" fill="#ffffff" />
+  </mask>
+  <image xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="img_5terre.jpg" mask="url(#svgmask1)"></image>
+</svg>
+```
+#### Ellipse
+The `<ellipse>` element is used. 
+```html
+<svg width="600" height="400" xmlns="http://www.w3.org/2000/svg">
+  <mask id="svgmask1">
+    <ellipse cx="220" cy="150" rx="200" ry="100" fill="#ffffff" />
+  </mask>
+  <image xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="img_5terre.jpg" mask="url(#svgmask1)"></image>
+</svg>
+```
+#### Triangle 
+The SVG `<polygon>` element is used to create a graphic that contains at least three sides.  
+```html
+<svg width="600" height="400" xmlns="http://www.w3.org/2000/svg">
+  <mask id="svgmask1">
+    <polygon fill="#ffffff" points="200 0, 400 400, 0 400"></polygon>
+  </mask>
+  <image xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="img_5terre.jpg" mask="url(#svgmask1)"></image>
+</svg>
+```
+#### Star
+`<polygon>` still.  
+```html
+<svg width="600" height="400" xmlns="http://www.w3.org/2000/svg">
+  <mask id="svgmask1">
+    <polygon fill="#ffffff" points="100,10 40,198 190,78 10,78 160,198"></polygon>
+  </mask>
+  <image xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="img_5terre.jpg" mask="url(#svgmask1)"></image>
+</svg>
+```
+#### Multiple Circles
+We define circles with different x and y positions.  
+```html
+<svg width="600" height="400" xmlns="http://www.w3.org/2000/svg">
+  <mask id="svgmask1">
+    <circle fill="#ffffff" cx="75" cy="75" r="75"></circle>
+    <circle fill="#ffffff" cx="80" cy="260" r="75"></circle>
+    <circle fill="#ffffff" cx="270" cy="160" r="75"></circle>
+  </mask>
+  <image xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="img_5terre.jpg" mask="url(#svgmask1)"></image>
+</svg>
+```
+# CSS Styling Buttons
+Themost common CSS properties for styling are: 
+- `background-color` - defines the background color of a button
+- `color` - defines the text color of a button
+- `border` - defines the border of a button
+- `padding` - defines the space between the text and the border of a button
+- `border-radius` - adds rounded corners to a button
+- `box-shadow` - adds shadows to a button
+- `text-align` - centers the text of a button
+- `font-size` - defines the font size of the text on a button
+- `text-decoration` - removes the underline for <a> elements used as buttons
+- `cursor` - changes the mouse cursor when hovering over the button
+Buttons are typically created with the HTML `<button>` element, the `<input type='button'>` or an `<a>` element styled as a button (or with role). 
+##### Border on buttons
+```css
+.button {
+  border: 1px solid green;
+}
+
+.btn-group .button:not(:last-child) {
+  border-right: none;
+}
+```
+# Pagination
+Pagination is typically a series of links, wrapped in an unordered list (`<ul>`). Each link represents an individual page number. In addition there are "previous" and "next" controls:  
+##### Simple example
+```css
+.pagination {
+  display: flex;
+  justify-content: center;
+  list-style: none; /* remove list bullets */
+  padding: 0px;
+}
+
+.pagination li a {
+  display: block; /* let links fill the list item */
+  padding: 8px 12px;
+  text-decoration: none;
+  border: 1px solid gray;
+  color: black;
+  margin: 0 4px;
+  border-radius: 5px; /* add rounded borders */
+}
+```
+##### Pagination With a Disabled Class
+```css
+.pagination li a.disabled {
+  color: #dddddd;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+```
+# CSS Multi-columns Properties
+- `column-count`	Specifies the number of columns an element should be divided into
+- `column-fill`	Specifies how to fill columns
+- `column-gap`	Specifies the gap between the columns
+- `column-rule`	A shorthand property for setting all the column-rule-* properties `column-rule: 1px solid red`
+- `column-rule-color`	Specifies the color of the rule between columns
+- `column-rule-style`	Specifies the style of the rule between columns `solid | dotted | dashed | ...`
+- `column-rule-width`	Specifies the width of the rule between columns 
+- `column-span`	Specifies how many columns an element should span across
+- `column-width`	Specifies a suggested, optimal width for the columns `length eg. 1px`
+- `columns`	A shorthand property for setting column-width and column-count.  
+### column-Span
+Specifies how many columns an element (typically a heading) should span across. 
+Default - `none`.    
+```css
+h2 {
+  column-span: all;
+  text-align: center;
+}
+```
+### Columns
+A shorthand for `column-count` and `column-width`.  
+`columns: auto | column-width column-count | initial | inherit`  
+```css
+div {
+  columns: 100px 3;
+}
+```
+# Vendor Prefixes
+Historically, browser engines used prefixes to implement new or experimental CSS features before they were officially "standardized" by the W3C. This allowed developers to test features without breaking the web once the final specification was decided  
+Even though many properties are now fully supported without prefixes, `-webkit` remains the most common one you'll see today.  
+Because mobile browsing exploded while Chrome and Safari dominated the market, many developers wrote code only using -webkit- prefixes. This forced other browsers (like Firefox and Edge) to actually support -webkit- prefixes just so websites wouldn't look broken on their browsers.  
+Therefore, you don't need to manually type these as much as you used to.
+The best practice are
+- To always put the non-prefixed(standar) property **last**. This ensures that if a browser supports the official version, it  overrides the experimental one.  
+```css
+.glass {
+  -webkit-backdrop-filter: blur(10px); /* Safari support */
+  backdrop-filter: blur(10px);         /* Standard version */
+}
+```
+- Use AutoPrefixer: Most modern workflows use a tool called Autoprefixer (via PostCSS). You write standard CSS, and the tool automatically adds the necessary prefixes based on current browser usage data.
+- Check "Can I Use": Before cluttering your stylesheet, check CanIUse.com to see if a prefix is even required anymore.
+# CSS UI 
+- **resize**
+- **outline-offset**
+## CSS Resize 
+Can have one of the following:
+- **horizontal** - user can resize the element horizontally (the width)
+- **vertical** - user can resize the element vertically (the height)
+- **both** - user can resize the element both vertically and horizontally
+- **none** - user cannot resize the element
+```css
+div {
+  resize: horizontal;
+  overflow: auto;
+}
+```
+```css
+div {
+  resize: vertical;
+  overflow: auto;
+}
+```
+### Disable Resize in Textarea
+a `<textarea>` is often resizable by default.  
+We can use the resize to disable the resizability.  
+```css
+textarea {
+  resize: none;
+}
+```
+## CSS Outline Offset
+The *outline-offset* property adds a space between an outline and the edge/border of an element.  
+The space between an element and its outline is transparent.  
+*Outline differs from borders! Unlike border, the outline is drawn outside the element's border, and may overlap other content. Also, the outline is NOT a part of the element's dimensions; the element's total width and height is not affected by the width of the outline.* 
+```css
+div.ex1 {
+  margin: 20px;
+  border: 1px solid black;
+  outline: 4px solid red;
+  outline-offset: 15px;
+}
+
+div.ex2 {
+  margin: 10px;
+  border: 1px solid black;
+  outline: 5px dashed blue;
+  outline-offset: 5px;
+}
+```
