@@ -1843,7 +1843,7 @@ Themost common CSS properties for styling are:
 - `box-shadow` - adds shadows to a button
 - `text-align` - centers the text of a button
 - `font-size` - defines the font size of the text on a button
-- `text-decoration` - removes the underline for <a> elements used as buttons
+- `text-decoration` - removes the underline for `<a>` elements used as buttons
 - `cursor` - changes the mouse cursor when hovering over the button
 Buttons are typically created with the HTML `<button>` element, the `<input type='button'>` or an `<a>` element styled as a button (or with role). 
 ##### Border on buttons
@@ -1928,6 +1928,12 @@ The best practice are
 ```
 - Use AutoPrefixer: Most modern workflows use a tool called Autoprefixer (via PostCSS). You write standard CSS, and the tool automatically adds the necessary prefixes based on current browser usage data.
 - Check "Can I Use": Before cluttering your stylesheet, check CanIUse.com to see if a prefix is even required anymore.
+```
+Prefix          Browser Engine              Primary Browsers
+-webkit-        WebKit / Blink              Chrome, Safari, newer Edge, Android
+-moz-           Gecko                       Firefox
+-o-             Presto                      Old versions of Opera-ms-Trident / EdgeHTMLInternet Explorer, old Edge
+```
 # CSS UI 
 - **resize**
 - **outline-offset**
@@ -1976,3 +1982,4 @@ div.ex2 {
   outline-offset: 5px;
 }
 ```
+# CSS Variables
